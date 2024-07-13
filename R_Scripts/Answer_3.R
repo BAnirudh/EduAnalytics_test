@@ -27,12 +27,16 @@ library(openxlsx)
 library(dplyr)
 #install.packages(c("mvtnorm", "expm", "msm", "ltm"))
 #library(ltm)
+#install.packages("officer")
+#install.packages("flextable")
+library(officer)
+library(flextable)
 #install.packages("psych")
 library(psych)
 
 #install.packages("wbstats")
 library(wbstats) # For this exercise we need to load the "wbstats" library
-install.packages("officer")
+#install.packages("officer")
 library(officer)
 
 ## **************** Pulling the Required Datasets ******************** ##
@@ -49,7 +53,7 @@ stunting_data <- wb_data(indicator = indicator, country = countries) %>%
 
 
 ## **************** Analysis ******************** ##
-table_recent <- stunting_data %>%
+table_recent <- stunting_data %>% # Tabulating the latest values for stunting in the 3 regions
   filter(!is.na(stunting_value_pct)) %>%
   group_by(iso3c) %>%
   arrange(desc(date)) %>%
@@ -59,7 +63,8 @@ table_recent <- stunting_data %>%
     Region = country,
     Year = date,
     Stunting_Prevalence = stunting_value_pct
-  ) 
+  )  %>%
+  select(iso3c, Region, Year, Stunting_Prevalence)
 
 # Creating a Word document and adding the table for exporting
 doc <- read_docx() %>%
