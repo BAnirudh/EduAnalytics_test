@@ -212,7 +212,8 @@ for (index_name in names(sub_indices_reg)) {
 }
 
 results_table <- bind_rows(reg_list) # Combining the results into a single table
-print(results_table) 
+print(results_table)  
+# Note: Low but significant coefficient values
 
 # Convert the results table to a flextable and adding to the Word document
 results_flextable <- flextable(results_table)
